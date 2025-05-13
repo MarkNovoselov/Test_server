@@ -1,1 +1,38 @@
-# 123
+from flask import Flask, request, jsonify, send_file
+import os
+
+app = Flask(__name__)
+UPLOAD_FOLDER = 'uploads'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+@app.route('/')
+def home():
+    return "Сервер работает!"
+
+@app.route('/json', methods=['POST'])
+def json_endpoint():
+    data = request.get_json()
+    if not data:
+        return jsonify({'error': 'Нет JSON'}), 400
+    print(f"Получен JSON: {data}")
+    return jsonify({'status': 'успешно', 'received': data})
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return jsonify({'error': 'Файл не найден'}), 400
+    file = request.files['file']
+    filepath = os.path.join(UPLOAD_FOLDER, file.filename)
+    file.save(filepath)
+    print(f"Файл сохранен: {filepath}")
+    return jsonify({'status': 'файл получен', 'filename': file.filename})
+
+@app.route('/download/<filename>', methods=['GET'])
+def download_file(filename):
+    filepath = os.path.join(UPLOAD_FOLDER, filename)
+    if not os.path.exists(filepath):
+        return jsonify({'error': 'Файл не найден'}), 404
+    return send_file(filepath, as_attachment=True)
+
+if __name__ == '__main__':
+    app.run(debug=True)
