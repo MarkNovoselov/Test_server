@@ -17,16 +17,6 @@ def json_endpoint():
     print(f"Получен JSON: {data}")
     return jsonify({'status': 'успешно', 'received': data})
 
-#@app.route('/upload', methods=['POST'])
-#def upload_file(): # загрузка файлов
-#    if 'file' not in request.files:
-#        return jsonify({'error': 'Файл не найден'}), 400
-#    file = request.files['file']
-#    filepath = os.path.join(UPLOAD_FOLDER, file.filename)
-#    file.save(filepath)
-#    print(f"Файл сохранен: {filepath}")
-#    return jsonify({'status': 'файл получен', 'filename': file.filename})
-
 @app.route('/download/<filename>', methods=['GET'])
 def download_file(filename): # скачивание файла клиентом
     filepath = os.path.join(UPLOAD_FOLDER, filename)
