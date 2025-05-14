@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, send_file
 import os
 
 app = Flask(__name__)
-UPLOAD_FOLDER = 'uploads'
+UPLOAD_FOLDER = 'downloads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.route('/') # проверка связи
