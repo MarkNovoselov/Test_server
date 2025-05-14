@@ -21,7 +21,7 @@ def json_endpoint():
 def download_file(filename): # скачивание файла клиентом
     filepath = os.path.join(UPLOAD_FOLDER, filename)
     if not os.path.exists(filepath):
-        return jsonify({'error': 'Файл не найден'}), 404
+        return jsonify({'error': 'Файл не найден', 'path': filepath}), 404
     return send_file(filepath, as_attachment=True)
 
 if __name__ == '__main__':
