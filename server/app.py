@@ -15,7 +15,7 @@ def json_endpoint():
     if not data:
         return jsonify({'error': 'Нет JSON'}), 400
     print(f"Получен JSON: {data}")
-    return jsonify({'status': 'успешно', 'received': data})
+    return jsonify({'status': 'успешно', 'received': data, 'data':os.listdir()})
 
 @app.route('/download/<filename>', methods=['GET'])
 def download_file(filename): # скачивание файла клиентом
